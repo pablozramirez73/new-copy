@@ -1,0 +1,5 @@
+{
+  "name": " Copy  of Flusso PDF Intelligente",
+  "description": "Un prototipo di applicazione web per gestire un flusso di lavoro documentale per i file PDF, arricchito con riepiloghi intelligenti generati dall'API di Gemini per una revisione efficiente.",
+  "requestFramePermissions": []
+}
