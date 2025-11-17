@@ -85,7 +85,7 @@ const App: React.FC = () => {
   const [previewState, setPreviewState] = useState<{ document: Document; position: { top: number; left: number }; } | null>(null);
   const hoverTimeoutRef = useRef<number | null>(null);
 
-  const handleAddDocument = (name: string, summary: string) => {
+  const handleAddDocument = useCallback((name: string, summary: string) => {
     setDocuments(prevDocs => [
       ...prevDocs,
       {
@@ -101,7 +101,7 @@ const App: React.FC = () => {
         spaceId: activeSpaceId === ALL_FILES_SPACE_ID ? undefined : activeSpaceId,
       }
     ]);
-  };
+  }, [activeSpaceId]);
 
   const handleStartUpdateStatus = useCallback((docId: string, newStatus: WorkflowStatus) => {
     setUpdateStatusModalState({ isOpen: true, docId, newStatus });
