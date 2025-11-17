@@ -149,7 +149,14 @@ const App: React.FC = () => {
   }, []);
 
   const handleConfirmMerge = async (newFileName: string, orderedDocs: Document[]) => {
-    const summary = await summarizeMergeAction(orderedDocs.map(d => d.name));
+    let summary: string;
+    try {
+      summary = await summarizeMergeAction(orderedDocs.map(d => d.name));
+    } catch (error) {
+      console.error("Impossibile generare il riepilogo per la fusione:", error);
+      summary = `Questo documento è stato creato unendo ${orderedDocs.length} file. Un riepilogo non ha potuto essere generato.`;
+    }
+    
     const newDoc: Document = {
       id: `doc${Date.now()}`,
       name: newFileName.endsWith('.pdf') ? newFileName : `${newFileName}.pdf`,
@@ -176,7 +183,14 @@ const App: React.FC = () => {
   const handleConfirmSplit = async (originalDoc: Document, newFileNames: string[]) => {
     const newDocs: Document[] = await Promise.all(
       newFileNames.map(async (name, index) => {
-        const summary = await summarizeSplitAction(originalDoc.name, name);
+        let summary: string;
+        try {
+          summary = await summarizeSplitAction(originalDoc.name, name);
+        } catch (error) {
+          console.error(`Impossibile generare il riepilogo per il file diviso ${name}:`, error);
+          summary = `Questo documento è una sezione estratta da ${originalDoc.name}. Un riepilogo non ha potuto essere generato.`;
+        }
+        
         return {
           id: `doc${Date.now() + index}`,
           name: name.endsWith('.pdf') ? name : `${name}.pdf`,

@@ -37,7 +37,7 @@ const generateContentWithFallback = async (prompt: string, fallback: string, opt
         return response.text;
     } catch (error) {
         console.error("Errore durante la chiamata all'API Gemini:", error);
-        return fallback;
+        throw new Error("La generazione del riepilogo AI non è riuscita. Riprova più tardi.");
     }
 };
 

@@ -41,7 +41,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({ onClose, onAddDocument
       const generatedSummary = await summarizeDocument(file.name, isThinkingMode);
       setSummary(generatedSummary);
     } catch (err) {
-      setError('Errore durante la generazione del riepilogo.');
+      const errorMessage = err instanceof Error ? err.message : 'Si è verificato un errore sconosciuto durante la generazione del riepilogo.';
+      setError(errorMessage);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -84,7 +85,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ onClose, onAddDocument
             </div>
           </div>
 
-          {error && <p className="text-sm text-rose-600 dark:text-rose-400">{error}</p>}
+          {error && <p className="text-sm text-rose-600 dark:text-rose-400 item-enter-animate">{error}</p>}
           
           {file && !summary && (
             <div className="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg border border-slate-200 dark:border-slate-700 item-enter-animate">
